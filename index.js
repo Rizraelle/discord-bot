@@ -1,7 +1,6 @@
-import dotenv from 'dotenv';
-dotenv.config()
+require('dotenv').config()
 
-import { Client, GatewayIntentBits } from 'discord.js';
+const { Client, GatewayIntentBits } = require('discord.js');
 
 const client = new Client({
   intents: [
@@ -9,17 +8,30 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.MessageContent
-  ]
+    GatewayIntentBits.MessageContent,
+  ],
 });
 
-client.on ("messageCreate", async (message) => {
-  console.log(message)
-  if (!message?.author.bot && message.contain('https://www.instagram.com/')) {
-    modified_content = message.content.split('https://www.instagram.com/')[1].split()[0];
-    modified_link = 'https://www.ddinstagram.com/{modified_content}';
-    await message.reply('{modified_link}')
-  }
+// client.on ("messageCreate", async (message) => {
+//   
+
+client.on ('ready', (c) => {
+  console.log(`${c.user.tag} is online`);
 })
 
-client.login(process.env.DISCORD_TOKEN)
+client.on('messageCreate', async (message) => {
+  if (!message?.author.bot && message.content.includes('https://www.instagram.com/')) {
+    if (message?.channelId === '1210570674561749053') {
+      modifiedContent = message.content.split('https://www.instagram.com/')[1].split('?')[0];
+      modifiedLink = `https://www.ddinstagram.com/${modifiedContent}`;
+      await message.reply(modifiedLink);
+    } else {
+      message.delete()
+      message.channel.send(`Are you ohueli tam? IG links ➡️ <#1210570674561749053>`)
+      .then(msg => console.log(`Deleted message from ${msg.author.username}`))
+      .catch(console.error);
+    }
+  }
+});
+
+client.login(process.env.DISCORD_TOKEN);
