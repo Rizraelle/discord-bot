@@ -12,13 +12,6 @@ const client = new Client({
   ],
 });
 
-// client.on ("messageCreate", async (message) => {
-//   
-
-client.on ('ready', (c) => {
-  console.log(`${c.user.tag} is online`);
-})
-
 client.on('messageCreate', async (message) => {
   if (!message?.author.bot && message.content.includes('https://www.instagram.com/')) {
     if (message?.channelId === '1210570674561749053') {
