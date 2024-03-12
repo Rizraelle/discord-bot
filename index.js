@@ -31,7 +31,8 @@ client.on('guildMemberAdd', async(member) => {
 })
 
 client.on('messageCreate', async (message) => {
-  if (!message?.author.bot && message.content.includes('@Лига Петучей')) {
+  if (!message?.author.bot && message.content.includes(`<@&1215354313325682759>`)) {
+    console.log(message)
     const exampleEmbed = {
       title: 'ПЕТУШКИ ОБЩИЙ СБОР',
       image: {
