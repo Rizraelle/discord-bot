@@ -13,7 +13,6 @@ app.listen(3000, function () {
 });
 
 const { Client, GatewayIntentBits } = require('discord.js');
-
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -24,12 +23,19 @@ const client = new Client({
   ],
 });
 
+client.on('guildMemberAdd', async(member) => {
+    const channelID = '1217180045609668608';
+    const message = `A tuda li ti zashel, ${member.user}?`;
+    const welcomeChannel = await member.guild.channels.cache.get(channelID)
+    welcomeChannel.send(message);
+})
+
 client.on('messageCreate', async (message) => {
   if (!message?.author.bot && message.content.includes('@everyone')) {
     const exampleEmbed = {
       title: 'ПЕТУШКИ ОБЩИЙ СБОР',
       image: {
-        url: `https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHdxdDZxb3hjNngxbjJnOHNvazZkd2hsZWs3a2J0eHhxYWRlaWdlNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KG4uqXCvWexDtODxrQ/giphy.gif`,
+        url: `https://i.kym-cdn.com/photos/images/original/000/790/534/877.gif`,
       },
     };
     message.channel.send({ embeds: [exampleEmbed] });
